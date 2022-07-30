@@ -5,6 +5,8 @@ export var speed = 250
 var velocity = Vector2(1, 0)
 var unique_dir = true
 
+var damage
+
 func _process(delta: float) -> void:
 	if unique_dir:
 		look_at(get_global_mouse_position())

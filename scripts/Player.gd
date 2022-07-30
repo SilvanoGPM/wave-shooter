@@ -1,7 +1,6 @@
 extends Sprite
 
 export var speed = 150
-export var hp = 3
 
 var PLAYER_SIZE = 12
 var SCREEN_MAX_X = 628
@@ -10,6 +9,14 @@ var SCREEN_MAX_Y = 348
 var velocity = Vector2.ZERO
 var can_shoot = true
 var dead = false
+
+var default_reload_time = 0.1
+var reload_time = default_reload_time
+
+var default_damage = 1
+var damage = default_damage
+
+var powerups_cooldown = []
 
 var projectile = preload("res://scenes/Projectile.tscn")
 
@@ -33,7 +40,10 @@ func process_velocity(delta: float) -> void:
 
 func control_shoot() -> void:
 	if Input.is_action_pressed('shoot') and Global.global_parent and can_shoot:
-		Global.instance_node(projectile, global_position)
+		var projectile_instance = Global.instance_node(projectile, global_position)
+		
+		projectile_instance.damage = damage
+		
 		can_shoot = false
 		$reload_timer.start()
 
@@ -45,6 +55,7 @@ func _process(delta: float) -> void:
 
 func _on_reload_timer_timeout():
 	can_shoot = true
+	$reload_timer.wait_time = reload_time
 
 func _on_hitbox_area_entered(area: Area2D):
 	if area.is_in_group('enemy'):
@@ -55,3 +66,15 @@ func _on_hitbox_area_entered(area: Area2D):
 
 func _on_restart_timer_timeout():
 	get_tree().reload_current_scene()
+
+func _on_reload_powerup_timer_timeout():
+	print(powerups_cooldown)
+	
+	if 'ReloadPowerUp' in powerups_cooldown:
+		reload_time = default_reload_time
+		powerups_cooldown.erase('ReloadPowerUp')
+		
+	if 'DamagePowerUp' in powerups_cooldown:
+		damage = default_damage
+		powerups_cooldown.erase('DamagePowerUp')
+	

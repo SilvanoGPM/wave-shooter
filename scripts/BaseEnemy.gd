@@ -45,7 +45,7 @@ func _on_hitbox_area_entered(area: Area2D):
 	if area.is_in_group('damage') and not stunned:
 		area.get_parent().queue_free()
 		
-		hp -= 1
+		hp -= area.get_parent().damage
 		stunned = true	
 		velocity = -velocity * knockback
 		

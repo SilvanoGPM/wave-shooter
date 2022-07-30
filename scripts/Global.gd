@@ -23,3 +23,15 @@ func stop_node(node) -> void:
 	node.set_process_internal(false)
 	node.set_process_unhandled_input(false)
 	node.set_process_unhandled_key_input(false)
+
+func random_pos_in_screen(out_bounds = false) -> Vector2:
+	if out_bounds:
+		return Vector2(rand_range(-160, 670), rand_range(-90, 390))
+
+	return Vector2(rand_range(0, 640), rand_range(0, 360))
+
+func create_spawnner(elements, parent, pos = random_pos_in_screen()) -> void:
+	var random = elements[randi() % elements.size()]
+
+	Global.instance_node(random, pos, parent)
+	

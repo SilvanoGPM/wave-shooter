@@ -12,7 +12,7 @@ scale = Vector2( 1.5, 1.5 )
 texture = ExtResource( 1 )
 script = ExtResource( 2 )
 
-[node name="hitbox" type="Area2D" parent="."]
+[node name="hitbox" type="Area2D" parent="." groups=["player"]]
 
 [node name="collision" type="CollisionShape2D" parent="hitbox"]
 position = Vector2( -0.5, -0.5 )
@@ -25,6 +25,11 @@ one_shot = true
 [node name="restart_timer" type="Timer" parent="."]
 one_shot = true
 
+[node name="reload_powerup_timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
 [connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="timeout" from="reload_timer" to="." method="_on_reload_timer_timeout"]
 [connection signal="timeout" from="restart_timer" to="." method="_on_restart_timer_timeout"]
+[connection signal="timeout" from="reload_powerup_timer" to="." method="_on_reload_powerup_timer_timeout"]

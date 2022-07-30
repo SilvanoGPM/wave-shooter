@@ -1,0 +1,60 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/Square.png" type="Texture" id=1]
+[ext_resource path="res://scripts/BasePowerUp.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 7.77818, 7.77818 )
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1e-05, 1e-05 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "show"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1e-05, 1e-05 ), Vector2( 1, 1 ), Vector2( 0.75, 0.75 ), Vector2( 1, 1 ) ]
+}
+
+[node name="ReloadPowerUp" type="Sprite"]
+modulate = Color( 0.564706, 1, 0, 1 )
+rotation = 0.785398
+scale = Vector2( 1e-05, 1e-05 )
+texture = ExtResource( 1 )
+script = ExtResource( 2 )
+increase_attribute = "reload_time"
+increase_value = 0.05
+cooldown_time = 2.0
+
+[node name="hitbox" type="Area2D" parent="."]
+
+[node name="collision" type="CollisionShape2D" parent="hitbox"]
+shape = SubResource( 1 )
+
+[node name="animation" type="AnimationPlayer" parent="."]
+autoplay = "show"
+anims/RESET = SubResource( 2 )
+anims/show = SubResource( 3 )
+
+[connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]
