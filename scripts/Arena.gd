@@ -1,6 +1,9 @@
 extends Node2D
 
-var enemy_1 = preload('res://scenes/Enemy.tscn')
+var MIN_ENEMY_SPAWN_TIME = 0.5
+var ENEMY_SPAWN_DIFFICULTY_INCREMENT = 0.025
+
+export (Array, PackedScene) var enemies 
 
 func _ready() -> void:
 	randomize()
@@ -22,4 +25,10 @@ func get_random_enemy_pos() -> Vector2:
 func _on_enemy_spawn_timer_timeout() -> void:
 	var enemy_pos = get_random_enemy_pos()
 
-	Global.instance_node(enemy_1, enemy_pos, self)
+	var enemy = enemies[randi() % enemies.size()]
+
+	Global.instance_node(enemy, enemy_pos, self)
+
+func _on_difficulty_timer_timeout():
+	if $enemy_spawn_timer.wait_time > MIN_ENEMY_SPAWN_TIME:
+		$enemy_spawn_timer.wait_time -= ENEMY_SPAWN_DIFFICULTY_INCREMENT

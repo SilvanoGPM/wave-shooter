@@ -1,26 +1,26 @@
 extends Sprite
 
-export var speed = 75
-export var hp = 3
+export (int) var speed = 75
+export (int) var hp = 3
+export (int) var knockback = 600
 
 var velocity = Vector2.ZERO
 var stunned = false
-var knockback = 6
 
-var default_color = null
+onready var default_color = modulate
 
 var blood_particle = preload('res://scenes/BloodParticle.tscn')
-
-func _ready() -> void:
-	default_color = modulate
 
 func follow_player(delta: float) -> void:
 	if Global.player != null and not stunned:
 		velocity = global_position.direction_to(Global.player.global_position)
+		
+		if not Global.player.dead:
+			global_position += velocity * speed * delta	
+		
 	elif stunned:
 		velocity = lerp(velocity, Vector2.ZERO, 0.3)
-	
-	global_position += velocity * speed * delta
+		global_position += velocity * delta
 
 func control_life() -> void:
 	if hp <= 0 and Global.global_parent:
@@ -29,6 +29,7 @@ func control_life() -> void:
 		
 		var particle = Global.instance_node(blood_particle, global_position)
 		
+		particle.modulate = Color.from_hsv(default_color.h, 1, 0.1)
 		particle.rotation = velocity.angle()
 		
 		queue_free()
