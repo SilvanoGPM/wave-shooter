@@ -2,6 +2,8 @@ extends Node
 
 var global_parent = null
 var player = null
+var camera = null
+
 var score = 0
 
 func instance_node(node, location, parent = global_parent):

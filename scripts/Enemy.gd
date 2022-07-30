@@ -24,6 +24,9 @@ func follow_player(delta: float) -> void:
 
 func control_life() -> void:
 	if hp <= 0 and Global.global_parent:
+		if Global.camera != null:
+			Global.camera.shake_screen(50, 0.1)
+		
 		var particle = Global.instance_node(blood_particle, global_position)
 		
 		particle.rotation = velocity.angle()

@@ -3,6 +3,9 @@ extends Node2D
 var enemy_1 = preload('res://scenes/Enemy.tscn')
 
 func _ready() -> void:
+	randomize()
+
+	Global.score = 0
 	Global.global_parent = self
 
 func _exit_tree() -> void:

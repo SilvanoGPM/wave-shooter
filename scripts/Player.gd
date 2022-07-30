@@ -3,6 +3,10 @@ extends Sprite
 export var speed = 150
 export var hp = 3
 
+var PLAYER_SIZE = 12
+var SCREEN_MAX_X = 628
+var SCREEN_MAX_Y = 348
+
 var velocity = Vector2.ZERO
 var can_shoot = true
 var dead = false
@@ -22,8 +26,11 @@ func process_velocity(delta: float) -> void:
 	velocity.x = get_direction('ui_right', 'ui_left')
 	velocity.y = get_direction('ui_down', 'ui_up')
 
-	global_position += speed * velocity * delta
-	
+	var pos = global_position + (speed * velocity * delta)
+
+	global_position.x = clamp(pos.x, PLAYER_SIZE, SCREEN_MAX_X)
+	global_position.y = clamp(pos.y, PLAYER_SIZE, SCREEN_MAX_Y)
+
 func control_shoot() -> void:
 	if Input.is_action_pressed('shoot') and Global.global_parent and can_shoot:
 		Global.instance_node(projectile, global_position)
