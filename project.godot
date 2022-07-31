@@ -21,12 +21,13 @@ _global_script_class_icons={
 [application]
 
 config/name="wawe-shooter"
-run/main_scene="res://scenes/Arena.tscn"
+run/main_scene="res://scenes/StartScreen.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 Global="*res://scripts/Global.gd"
+PauseScreen="*res://scenes/PauseScreen.tscn"
 
 [display]
 

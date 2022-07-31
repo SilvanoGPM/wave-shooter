@@ -50,6 +50,7 @@ autostart = true
 autostart = true
 
 [node name="powerup_spawn_timer" type="Timer" parent="."]
+wait_time = 10.0
 autostart = true
 
 [node name="ui" type="Node2D" parent="."]
