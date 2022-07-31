@@ -8,6 +8,8 @@ var player = null
 var camera = null
 var damage_screen = null
 
+var game_state = 'start_screen'
+
 var score = 0
 var highscore = 0
 

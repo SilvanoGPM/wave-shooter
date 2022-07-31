@@ -8,7 +8,8 @@ var ENEMY_SPAWN_DIFFICULTY_INCREMENT = 0.025
 
 func _ready() -> void:
 	randomize()
-
+	
+	Global.game_state = 'arena'
 	Global.score = 0
 	Global.global_parent = self
 

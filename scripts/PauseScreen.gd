@@ -10,7 +10,7 @@ func show(is_visible) -> void:
 	get_tree().paused = is_visible
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed('ui_cancel'):
+	if event.is_action_pressed('ui_cancel') and Global.game_state == 'arena':
 		show(!get_tree().paused)
 
 func _on_continue_button_pressed():
