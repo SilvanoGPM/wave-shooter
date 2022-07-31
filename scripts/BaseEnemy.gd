@@ -3,6 +3,7 @@ extends Sprite
 export (int) var speed = 75
 export (int) var hp = 3
 export (int) var knockback = 600
+export (int) var score = 10
 
 var velocity = Vector2.ZERO
 var stunned = false
@@ -34,7 +35,7 @@ func control_life() -> void:
 		
 		queue_free()
 
-		Global.score += 10
+		Global.score += score
 
 func _process(delta: float) -> void:
 	follow_player(delta)

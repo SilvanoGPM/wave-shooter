@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/Arena.gd" type="Script" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://scenes/RedEnemy.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/ReloadPowerUp.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/DamagePowerUp.tscn" type="PackedScene" id=10]
+[ext_resource path="res://assets/Lives.png" type="Texture" id=11]
+[ext_resource path="res://scripts/ControlUI.gd" type="Script" id=12]
 
 [sub_resource type="Environment" id=1]
 background_mode = 4
@@ -47,6 +49,7 @@ autostart = true
 autostart = true
 
 [node name="powerup_spawn_timer" type="Timer" parent="."]
+wait_time = 10.0
 autostart = true
 
 [node name="ui" type="Node2D" parent="."]
@@ -55,6 +58,7 @@ z_index = 20
 [node name="control" type="Control" parent="ui"]
 margin_right = 640.0
 margin_bottom = 360.0
+script = ExtResource( 12 )
 
 [node name="score" type="Label" parent="ui/control"]
 margin_right = 640.0
@@ -74,6 +78,16 @@ text = "0"
 align = 1
 valign = 1
 script = ExtResource( 6 )
+
+[node name="life" type="TextureRect" parent="ui/control"]
+modulate = Color( 0.72549, 0.0862745, 0.627451, 1 )
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 11 )
+expand = true
+stretch_mode = 2
 
 [node name="camera" type="Camera2D" parent="."]
 position = Vector2( 320, 180 )

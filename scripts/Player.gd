@@ -2,6 +2,8 @@ extends Sprite
 
 export var speed = 150
 
+signal hit(life)
+
 var PLAYER_SIZE = 12
 var SCREEN_MAX_X = 628
 var SCREEN_MAX_Y = 348
@@ -9,6 +11,9 @@ var SCREEN_MAX_Y = 348
 var velocity = Vector2.ZERO
 var can_shoot = true
 var dead = false
+
+var max_life = 3
+var life = max_life
 
 var default_reload_time = 0.1
 var reload_time = default_reload_time
@@ -22,6 +27,8 @@ var projectile = preload("res://scenes/Projectile.tscn")
 
 func _ready() -> void:
 	Global.player = self
+	connect('hit', get_parent().get_node('ui/control'), 'on_player_hit')
+	emit_signal('hit', max_life)
 
 func _exit_tree() -> void:
 	Global.player = null
@@ -47,11 +54,20 @@ func control_shoot() -> void:
 		can_shoot = false
 		$reload_timer.start()
 
+func control_life() -> void:
+	if life <= 0:
+		visible = false
+		dead = true
+		
+		$restart_timer.start()
+
 func _process(delta: float) -> void:
 	if not dead:
 		process_velocity(delta)
 		
 		control_shoot()
+
+		control_life()
 
 func _on_reload_timer_timeout():
 	can_shoot = true
@@ -59,11 +75,9 @@ func _on_reload_timer_timeout():
 
 func _on_hitbox_area_entered(area: Area2D):
 	if area.is_in_group('enemy'):
-		visible = false
-		dead = true
-		
-		$restart_timer.start()
-
+		life -= 1
+		emit_signal('hit', life)
+	
 func _on_restart_timer_timeout():
 	get_tree().reload_current_scene()
 

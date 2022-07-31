@@ -7,3 +7,4 @@ modulate = Color( 0.803922, 0.670588, 0.0470588, 1 )
 speed = 120
 hp = 1
 knockback = 1200
+score = 5

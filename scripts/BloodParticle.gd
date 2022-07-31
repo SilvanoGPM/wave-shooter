@@ -8,6 +8,5 @@ func _on_timer_timeout():
 func _on_clear_timer_timeout():
 	modulate.a = lerp(modulate.a, 0, 0.1)
 	
-
 	if modulate.a <= CLEAR_PARTICLE_OPACITY_PERCENT:
 		queue_free()
