@@ -32,3 +32,7 @@ func _on_difficulty_timer_timeout():
 
 func _on_powerup_spawn_timer_timeout():
 	Global.create_spawnner(powerups, self)
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_QUIT_REQUEST:
+		Global.save_game()

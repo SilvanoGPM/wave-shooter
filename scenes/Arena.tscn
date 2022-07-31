@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/Arena.gd" type="Script" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://scenes/DamagePowerUp.tscn" type="PackedScene" id=10]
 [ext_resource path="res://assets/Lives.png" type="Texture" id=11]
 [ext_resource path="res://scripts/ControlUI.gd" type="Script" id=12]
+[ext_resource path="res://assets/damage-bg.png" type="Texture" id=13]
 
 [sub_resource type="Environment" id=1]
 background_mode = 4
@@ -49,7 +50,6 @@ autostart = true
 autostart = true
 
 [node name="powerup_spawn_timer" type="Timer" parent="."]
-wait_time = 10.0
 autostart = true
 
 [node name="ui" type="Node2D" parent="."]
@@ -88,6 +88,12 @@ margin_bottom = 40.0
 texture = ExtResource( 11 )
 expand = true
 stretch_mode = 2
+
+[node name="damage" type="TextureRect" parent="ui/control"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 13 )
 
 [node name="camera" type="Camera2D" parent="."]
 position = Vector2( 320, 180 )

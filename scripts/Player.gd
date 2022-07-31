@@ -1,8 +1,10 @@
 extends Sprite
 
+signal hit(life)
+
 export var speed = 150
 
-signal hit(life)
+onready var default_color = modulate
 
 var PLAYER_SIZE = 12
 var SCREEN_MAX_X = 628
@@ -27,6 +29,7 @@ var projectile = preload("res://scenes/Projectile.tscn")
 
 func _ready() -> void:
 	Global.player = self
+	Global.damage_screen = get_parent().get_node("ui/control/damage")
 	connect('hit', get_parent().get_node('ui/control'), 'on_player_hit')
 	emit_signal('hit', max_life)
 
@@ -59,6 +62,8 @@ func control_life() -> void:
 		visible = false
 		dead = true
 		
+		Global.save_game()
+		
 		$restart_timer.start()
 
 func _process(delta: float) -> void:
@@ -77,12 +82,18 @@ func _on_hitbox_area_entered(area: Area2D):
 	if area.is_in_group('enemy'):
 		life -= 1
 		emit_signal('hit', life)
-	
-func _on_restart_timer_timeout():
-	get_tree().reload_current_scene()
 
+		if Global.damage_screen != null:
+			Global.damage_screen.show()
+
+		modulate = Color.white
+		$reset_color_timer.start()
+
+func _on_restart_timer_timeout():
+	var _ignore = get_tree().reload_current_scene()
+	
 func _on_reload_powerup_timer_timeout():
-	print(powerups_cooldown)
+	modulate = default_color
 	
 	if 'ReloadPowerUp' in powerups_cooldown:
 		reload_time = default_reload_time
@@ -92,3 +103,8 @@ func _on_reload_powerup_timer_timeout():
 		damage = default_damage
 		powerups_cooldown.erase('DamagePowerUp')
 	
+func _on_reset_color_timer_timeout():
+	if Global.damage_screen != null:
+			Global.damage_screen.hide()
+	
+	modulate = default_color

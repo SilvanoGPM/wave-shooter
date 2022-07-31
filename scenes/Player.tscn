@@ -29,7 +29,12 @@ one_shot = true
 wait_time = 3.0
 one_shot = true
 
+[node name="reset_color_timer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
 [connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="timeout" from="reload_timer" to="." method="_on_reload_timer_timeout"]
 [connection signal="timeout" from="restart_timer" to="." method="_on_restart_timer_timeout"]
 [connection signal="timeout" from="reload_powerup_timer" to="." method="_on_reload_powerup_timer_timeout"]
+[connection signal="timeout" from="reset_color_timer" to="." method="_on_reset_color_timer_timeout"]
